@@ -1,0 +1,26 @@
+name: React_frontend
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+      - name: deploy to vm
+        uses: appleboy/ssh-action@v1.2.0
+
+        with:
+          host: ${{secrets.IP}}
+          username: ${{secrets.USERNAME}}
+          key: ${{secrets.SSH.KEY}}
+
+          script: |
+            cd /home/ubuntu/React_frontend
+            git pull origin main
+            source venv/bin/activate
+            pip install -r requirements.txt
+            pm2 start "uvicorn unified_main:app --host 0.0.0.0 --port 8000" --name AI_backend
+          
