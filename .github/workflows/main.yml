@@ -22,5 +22,5 @@ jobs:
             git pull origin main
             sudo npm i 
             sudo npm run build
-            pm2 restart "React_frontend" || pm2 start npm --name "React_frontend" -- run dev
+            pm2 restart "AI_frontend" || pm2 start npm --name "AI_frontend" -- run dev
           
